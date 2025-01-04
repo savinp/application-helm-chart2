@@ -24,6 +24,6 @@ appVersion: "1.0"
 
 dependencies:
 dependencies:
-  - name: nginx
-    version: 1.0.0
+  - name: wordpress
+    version: 0.1.0
     repository: "https://github.com/savinp/my-helm-repo/raw/main"
