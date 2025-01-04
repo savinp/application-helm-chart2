@@ -24,6 +24,6 @@ appVersion: "1.0"
 
 dependencies:
   - name: wordpress
-    version: 0.2.0
+    version: 0.1.0
     #repository: "https://github.com/savinp/my-helm-repo/raw/main"
-    repository: "https://github.com/savinp/shared-helm-chart"
+    repository: "https://savinp.github.io/my-helm-repo/"
