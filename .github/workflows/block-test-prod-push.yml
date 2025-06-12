@@ -1,4 +1,4 @@
-name: Block Direct Push to test/prod values files
+name: Prevent direct push to test/prod envs
 
 on:
   push:
@@ -6,23 +6,21 @@ on:
       - main
 
 jobs:
-  protect-env-files:
+  block-direct-prod-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Get changed files
-        id: changed-files
+        id: files
         uses: tj-actions/changed-files@v44
 
-      - name: Block if protected files are modified
+      - name: Block protected files
         run: |
-          echo "Changed files:"
-          echo "${{ steps.changed-files.outputs.all_changed_files }}"
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          for file in ${{ steps.files.outputs.all_changed_files }}; do
             if [[ "$file" == "values-test.yaml" || "$file" == "values-prod.yaml" ]]; then
-              echo "❌ ERROR: Direct commits to $file are not allowed. Please raise a PR for review."
+              echo "❌ Direct commit to $file is blocked. Use a Pull Request with approval."
               exit 1
             fi
           done
+
