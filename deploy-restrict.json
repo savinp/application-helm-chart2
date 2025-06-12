@@ -1,0 +1,35 @@
+{
+  "name": "Protect values-test/prod.yaml only",
+  "target": "push",
+  "source_type": "Repository",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "exclude": [],
+      "include": [
+        "~DEFAULT_BRANCH"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "type": "file_path_restriction",
+      "parameters": {
+        "restricted_file_paths": [
+          "values-test.yaml",
+          "values-prod.yaml"
+        ]
+      }
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "require_code_owner_review": true,
+        "required_approving_review_count": 1,
+        "require_last_push_approval": false,
+        "dismiss_stale_reviews_on_push": true,
+        "required_review_thread_resolution": false
+      }
+    }
+  ]
+}
