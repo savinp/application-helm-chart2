@@ -1,26 +1,24 @@
-name: Prevent direct push to test/prod envs
+name: block-prod-push
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  block-direct-prod-push:
+  block:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Get changed files
         id: files
         uses: tj-actions/changed-files@v44
-
-      - name: Block protected files
+      - name: Block test/prod files
         run: |
           for file in ${{ steps.files.outputs.all_changed_files }}; do
             if [[ "$file" == "values-test.yaml" || "$file" == "values-prod.yaml" ]]; then
-              echo "❌ Direct commit to $file is blocked. Use a Pull Request with approval."
+              echo "🚫 Direct push to $file blocked. Use PR."
               exit 1
             fi
           done
+
 
